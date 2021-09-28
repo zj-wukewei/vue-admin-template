@@ -1593,6 +1593,21 @@
   resolved "https://registry.nlark.com/@vue/web-component-wrapper/download/@vue/web-component-wrapper-1.3.0.tgz#b6b40a7625429d2bd7c2281ddba601ed05dc7f1a"
   integrity sha1-trQKdiVCnSvXwigd26YB7QXcfxo=
 
+"@vueuse/core@^6.5.3":
+  version "6.5.3"
+  resolved "https://registry.npmmirror.com/@vueuse/core/download/@vueuse/core-6.5.3.tgz#15848eaccad18652df4cb4b6ccae7bd7921a0c7e"
+  integrity sha1-FYSOrMrRhlLfTLS2zK5715IaDH4=
+  dependencies:
+    "@vueuse/shared" "6.5.3"
+    vue-demi "*"
+
+"@vueuse/shared@6.5.3":
+  version "6.5.3"
+  resolved "https://registry.npmmirror.com/@vueuse/shared/download/@vueuse/shared-6.5.3.tgz#6503fa4bfbf45d0616bacedb8a4bd003f01da73b"
+  integrity sha1-ZQP6S/v0XQYWus7bikvQA/Adpzs=
+  dependencies:
+    vue-demi "*"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.nlark.com/@webassemblyjs/ast/download/@webassemblyjs/ast-1.9.0.tgz?cache=0&sync_timestamp=1625473466238&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40webassemblyjs%2Fast%2Fdownload%2F%40webassemblyjs%2Fast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -8598,6 +8613,11 @@ vooks@^0.2.4, vooks@^0.2.6:
   integrity sha1-NM26wHxzW2xNHoFqNHL8clFwl/Q=
   dependencies:
     evtd "^0.2.2"
+
+vue-demi@*:
+  version "0.11.4"
+  resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
+  integrity sha1-YQGZL+RyTPVjQBihbpU/MFLpTio=
 
 vue-eslint-parser@^7.10.0:
   version "7.11.0"
