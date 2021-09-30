@@ -1,4 +1,14 @@
 import BasicModal from "./modal";
 import { useModal, useModalInner } from "./modal/hooks/useModal";
 
-export { BasicModal, useModal, useModalInner };
+import Drawer from "./drawer";
+import { useDrawer, useDrawerInner } from "./drawer/hooks/useDrawer";
+
+export {
+  BasicModal,
+  useModal,
+  useModalInner,
+  Drawer,
+  useDrawer,
+  useDrawerInner,
+};
