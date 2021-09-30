@@ -29,7 +29,7 @@ import { deepMerge } from "@/utils";
 import { useVModel } from "@/hooks";
 
 export default {
-  name: "Drawer",
+  name: "BasicDrawer",
   props: {
     title: { type: String, default: "" },
     visible: { type: Boolean },
