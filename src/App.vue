@@ -1,6 +1,19 @@
 <template>
-  <router-view />
+  <n-config-provider :locale="locale">
+    <router-view />
+  </n-config-provider>
 </template>
+
+<script>
+import { zhCN } from "naive-ui";
+
+export default {
+  name: "App",
+  setup() {
+    return { locale: zhCN };
+  },
+};
+</script>
 <style>
 body {
   height: 100vh;

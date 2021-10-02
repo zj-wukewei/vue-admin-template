@@ -4,6 +4,9 @@ import { useModal, useModalInner } from "./modal/hooks/useModal";
 import BasicDrawer from "./drawer";
 import { useDrawer, useDrawerInner } from "./drawer/hooks/useDrawer";
 
+import BasicTable from "./table";
+import { useTable } from "./table/hooks/useTable";
+
 export {
   BasicModal,
   useModal,
@@ -11,4 +14,6 @@ export {
   BasicDrawer,
   useDrawer,
   useDrawerInner,
+  BasicTable,
+  useTable,
 };

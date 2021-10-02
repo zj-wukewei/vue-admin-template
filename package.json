@@ -10,10 +10,11 @@
   "dependencies": {
     "@vueuse/core": "^6.5.3",
     "core-js": "^3.6.5",
+    "lodash-es": "^4.17.21",
     "naive-ui": "^2.19.2",
     "vfonts": "^0.1.0",
     "vue": "^3.0.0",
-    "lodash-es": "^4.17.21",
+    "vue-request": "^1.2.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
