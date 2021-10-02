@@ -44,9 +44,11 @@ export function useTable(tableProps) {
     return table;
   }
 
-  const methods = {};
-
-  console.log("getTableInstance", getTableInstance, methods);
+  const methods = {
+    refresh: () => getTableInstance().refreshData(),
+    manualRun: (params) => getTableInstance().manualRun(params),
+    refreshStartPage: () => getTableInstance().refreshStartPage(),
+  };
 
   return [register, methods];
 }

@@ -1,5 +1,6 @@
 <template>
   <BasicTable @register="register"></BasicTable>
+  <n-button type="primary" @click="onSubmit"> 立即登录 </n-button>
 </template>
 
 <script>
@@ -25,7 +26,7 @@ export default {
         }, 1000);
       });
     };
-    const [register] = useTable({
+    const [register, { refresh }] = useTable({
       api: fetcApi,
       columns: [
         {
@@ -38,7 +39,7 @@ export default {
         },
       ],
     });
-    return { register };
+    return { register, onSubmit: () => refresh() };
   },
 };
 </script>

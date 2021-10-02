@@ -42,18 +42,16 @@ export default {
       };
     });
 
-    function setProps(props) {
-      propsRef.value = { ...unref(propsRef), ...props };
-    }
-
     const tableMethods = {
       setProps,
+      refreshData,
+      manualRun,
+      refreshStartPage,
     };
 
     expose(tableMethods);
 
     emit("register", tableMethods);
-
     const {
       data,
       current,
@@ -62,7 +60,29 @@ export default {
       pageSize,
       changeCurrent,
       changePagination,
+      refresh,
+      run,
+      params,
     } = usePagination(unref(getMergeProps).api);
+
+    function manualRun(param) {
+      run({
+        ...unref(params)[0],
+        ...param,
+        current: 1,
+      });
+    }
+
+    function refreshStartPage() {
+      run({
+        ...unref(params)[0],
+        current: 1,
+      });
+    }
+
+    function refreshData() {
+      refresh();
+    }
 
     const getMergePagination = computed(() => ({
       ...unref(getMergeProps).pagination,
@@ -76,6 +96,10 @@ export default {
       },
     }));
     const list = computed(() => data.value?.data || []);
+
+    function setProps(props) {
+      propsRef.value = { ...unref(propsRef), ...props };
+    }
 
     return {
       tableRef,
