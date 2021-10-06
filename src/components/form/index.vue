@@ -130,7 +130,7 @@ export default {
 
     const getComponentProps = (componentProps) => {
       if (isFunction(componentProps)) {
-        return componentProps();
+        return componentProps({ formModel, formRef });
       }
       return componentProps;
     };
