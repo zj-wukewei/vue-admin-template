@@ -60,6 +60,24 @@ export default {
           ],
         },
       },
+      {
+        component: "radio",
+        path: "sex1",
+        label: "性别22",
+        componentProps: {
+          placeholder: "请选择",
+          options: [
+            {
+              label: "男",
+              value: "1",
+            },
+            {
+              label: "女",
+              value: "2",
+            },
+          ],
+        },
+      },
     ];
     const propMapToTime = [["anme411", ["startTime", "endTime"]]];
 
