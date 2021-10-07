@@ -1,21 +1,21 @@
 <template>
-  <n-input
+  <n-select
     v-bind="componentProps"
     v-model:value="modelValue"
     clearable
-  ></n-input>
+  ></n-select>
 </template>
 
 <script>
 import useVModel from "@/hooks/useVModel";
 export default {
-  name: "sl-input",
+  name: "sl-select",
   props: {
     componentProps: {
       type: Object,
       default: () => ({
-        placeholder: "请输入",
-        type: "text",
+        placeholder: "请选择",
+        options: [],
       }),
     },
     value: undefined,

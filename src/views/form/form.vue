@@ -42,6 +42,24 @@ export default {
           placeholder: "请输入`333222",
         },
       },
+      {
+        component: "select",
+        path: "sex",
+        label: "性别",
+        componentProps: {
+          placeholder: "请选择",
+          options: [
+            {
+              label: "男",
+              value: "1",
+            },
+            {
+              label: "女",
+              value: "2",
+            },
+          ],
+        },
+      },
     ];
     const propMapToTime = [["anme411", ["startTime", "endTime"]]];
 
