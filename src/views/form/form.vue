@@ -66,6 +66,7 @@ export default {
         label: "性别22",
         componentProps: {
           placeholder: "请选择",
+          disabled: true,
           options: [
             {
               label: "男",

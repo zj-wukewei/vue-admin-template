@@ -128,13 +128,6 @@ export default {
       return schemas;
     });
 
-    const getComponentProps = (componentProps) => {
-      if (isFunction(componentProps)) {
-        return componentProps({ formModel, formRef });
-      }
-      return componentProps;
-    };
-
     const { handleFormValues, initDefault } = useFormValues({
       getSchema,
       formModel,
@@ -156,6 +149,19 @@ export default {
       getProps,
       handleFormValues,
     });
+
+    const getComponentProps = (componentProps) => {
+      if (isFunction(componentProps)) {
+        return componentProps({
+          formModel,
+          formRef,
+          resetFields,
+          updateSchema,
+          removeSchemaByPath,
+        });
+      }
+      return componentProps;
+    };
 
     const debounceOnchange = useDebounce((values) => {
       emit("onChange", handleFormValues(toRaw(values)));
