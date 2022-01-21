@@ -5,6 +5,22 @@ import { cloneDeep } from "lodash-es";
 export function useFormValues({ getSchema, formModel, getProps }) {
   function handleFormValues(values) {
     const cloneValues = cloneDeep(values);
+    const schemas = unref(getSchema);
+    // 隐藏的表单项，去除相应的值
+    Object.keys(cloneValues).forEach((prop) => {
+      const schema = schemas.find((item) => item.prop === prop);
+      if (!schema) {
+        Reflect.deleteProperty(cloneValues, prop);
+      }
+      if (
+        (typeof schema.visible === "function" && !schema.visible(formModel)) ||
+        schema.visible === false
+      ) {
+        // 不显示的表单项直接去除
+        Reflect.deleteProperty(cloneValues, prop);
+      }
+    });
+
     const pathMapToTime = unref(getProps).pathMapToTime;
     if (!pathMapToTime || !Array.isArray(pathMapToTime)) {
       return cloneValues;
