@@ -24,15 +24,25 @@
         </n-grid-item>
       </template>
 
-      <template v-if="$slots.action">
-        <slot name="action"></slot>
-      </template>
+      <n-grid-item suffix class="suffix" v-if="getProps.table" #="{ overflow }">
+        <n-form-item>
+          <n-button type="primary" @click="handleOkClick">确定</n-button>
+          <n-button @click="resetFields">取消</n-button>
+          <span class="action">
+            <n-icon size="20" @click="hanldeOnOverflow">
+              <ArrowDown v-if="overflow" />
+              <ArrowUp v-if="!overflow" />
+            </n-icon>
+          </span>
+        </n-form-item>
+      </n-grid-item>
     </n-grid>
   </n-form>
 </template>
 
 <script>
 import { ref, reactive, onMounted, computed, unref, watch, toRaw } from "vue";
+import { ArrowDown, ArrowUp } from "@vicons/ionicons5";
 import { useFormEvents } from "./hooks/useFormEvents";
 import { useFormValues } from "./hooks/useFormValues";
 import { useDebounce } from "@/hooks";
@@ -69,6 +79,11 @@ export default {
       type: String,
       default: "medium",
     },
+    //是否是table的form
+    table: {
+      type: Boolean,
+      default: () => false,
+    },
     //row属性
     rowProps: {
       type: Object,
@@ -92,13 +107,16 @@ export default {
       default: () => [],
     },
   },
-  emits: ["register", "onChange"],
+  components: { ArrowDown, ArrowUp },
+  emits: ["register", "onChange", "ok"],
   setup(props, { emit, attrs }) {
     const formModel = reactive({});
     const formRef = ref(null);
     const propsRef = ref(null);
     const schemaRef = ref(null);
     const isInitedDefaultRef = ref(false);
+
+    const gridCollapsed = ref(true);
 
     const getBindValue = computed(() => ({
       ...attrs,
@@ -110,7 +128,16 @@ export default {
     });
 
     const getRow = computed(() => {
-      const { rowProps } = unref(getProps);
+      const { rowProps, table } = unref(getProps);
+      if (table) {
+        return {
+          ...rowProps,
+          collapsed: gridCollapsed.value,
+          collapsedRows: 1,
+          responsive: "screen",
+          cols: "3  m:4 l:4 xl:4 2xl:6",
+        };
+      }
       return rowProps;
     });
 
@@ -196,6 +223,15 @@ export default {
       emit("register", formActionType);
     });
 
+    const hanldeOnOverflow = () => {
+      gridCollapsed.value = !gridCollapsed.value;
+    };
+
+    const handleOkClick = async () => {
+      const data = await validate();
+      emit("ok", data);
+    };
+
     return {
       formRef,
       getSchema,
@@ -204,7 +240,29 @@ export default {
       getRow,
       getCol,
       getComponentProps,
+      getProps,
+      resetFields,
+      hanldeOnOverflow,
+      handleOkClick,
     };
   },
 };
 </script>
+
+<style lang="less" scoped>
+.suffix {
+  display: flex;
+  justify-content: right;
+  margin-right: 30px;
+
+  .action {
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+  }
+
+  button + button {
+    margin-left: 20px;
+  }
+}
+</style>

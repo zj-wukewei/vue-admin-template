@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span>表格搜索三个以下</span>
     <FormSchemas @register="register" @onChange="handleOnChange"></FormSchemas>
 
     <n-button type="primary" @click="validate"> validate </n-button>
@@ -83,9 +82,10 @@ export default {
     const propMapToTime = [["anme411", ["startTime", "endTime"]]];
 
     const [register, { validate, resetFields, setFieldsValue }] = useForm({
-      colProps: {
-        span: 6,
-      },
+      // colProps: {
+      //   span: 6,
+      // },
+      table: true,
       labelWidth: "100px",
       schemas: schemas,
       propMapToTime,

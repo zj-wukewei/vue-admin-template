@@ -1,4 +1,13 @@
 <template>
+  <div v-if="hasTableForm" class="table-search">
+    <FormSchemas
+      :labelWidth="getMergeProps.labelWidth"
+      :table="true"
+      :schemas="getMergeProps.schemas"
+      :pathMapToTime="getMergeProps.pathMapToTime"
+      @ok="handleOkFormClick"
+    />
+  </div>
   <n-data-table
     remote
     ref="tableRef"
@@ -12,13 +21,28 @@
 <script>
 import { ref, unref, computed } from "vue";
 import { usePagination } from "vue-request";
+import FormSchemas from "../form";
 
 export default {
   name: "BaiscTable",
+  components: { FormSchemas },
   props: {
     rowKey: String || Number,
     api: Function,
     columns: Array,
+    labelWidth: {
+      type: Number,
+      default: () => 100,
+    },
+    //头部form组件配置
+    schemas: {
+      type: Array,
+      default: () => [],
+    },
+    pathMapToTime: {
+      type: Array,
+      default: () => [],
+    },
     pagination: {
       type: Object,
       default: () => ({
@@ -41,6 +65,23 @@ export default {
         ...unref(propsRef),
       };
     });
+
+    const hasTableForm = computed(() => {
+      console.log("unref(getMergeProps)", getMergeProps);
+      const { schemas } = unref(getMergeProps);
+
+      return schemas && schemas.length > 0;
+    });
+
+    // const formProps = computed(() => {
+    //   const { schemas, propMapToTime } = unref(getMergeProps);
+    //   return {
+    //     table: true,
+    //     labelWidth: "100px",
+    //     schemas: schemas,
+    //     propMapToTime: propMapToTime,
+    //   };
+    // });
 
     const tableMethods = {
       setProps,
@@ -101,13 +142,26 @@ export default {
       propsRef.value = { ...unref(propsRef), ...props };
     }
 
+    const handleOkFormClick = (data) => {
+      manualRun(data);
+    };
     return {
       tableRef,
       getMergeProps,
       getMergePagination,
       list,
       loading,
+      hasTableForm,
+      handleOkFormClick,
     };
   },
 };
 </script>
+
+<style lang="less">
+.table-search {
+  padding: 24px 24px 0;
+  background: #fff;
+  margin-bottom: 16px;
+}
+</style>

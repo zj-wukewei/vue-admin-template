@@ -1,5 +1,5 @@
 import { unref } from "vue";
-import { isNullOrUnDef } from "@/utils/is";
+import { isNullOrUnDef, isFunction } from "@/utils/is";
 import { cloneDeep } from "lodash-es";
 
 export function useFormValues({ getSchema, formModel, getProps }) {
@@ -7,17 +7,17 @@ export function useFormValues({ getSchema, formModel, getProps }) {
     const cloneValues = cloneDeep(values);
     const schemas = unref(getSchema);
     // 隐藏的表单项，去除相应的值
-    Object.keys(cloneValues).forEach((prop) => {
-      const schema = schemas.find((item) => item.prop === prop);
+    Object.keys(cloneValues).forEach((path) => {
+      const schema = schemas.find((item) => item.path === path);
       if (!schema) {
-        Reflect.deleteProperty(cloneValues, prop);
+        Reflect.deleteProperty(cloneValues, path);
       }
       if (
-        (typeof schema.visible === "function" && !schema.visible(formModel)) ||
+        (isFunction(schema.visible) && !schema.visible(formModel)) ||
         schema.visible === false
       ) {
         // 不显示的表单项直接去除
-        Reflect.deleteProperty(cloneValues, prop);
+        Reflect.deleteProperty(cloneValues, path);
       }
     });
 

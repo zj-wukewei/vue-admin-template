@@ -1,6 +1,7 @@
 <template>
-  <BasicTable @register="register"></BasicTable>
-  <n-button type="primary" @click="onSubmit"> 立即登录 </n-button>
+  <div class="page-table">
+    <BasicTable @register="register"></BasicTable>
+  </div>
 </template>
 
 <script>
@@ -26,8 +27,74 @@ export default {
         }, 1000);
       });
     };
+    const schemas = [
+      {
+        component: "input",
+        path: "anme1",
+        label: "姓名1",
+        rule: {
+          required: true,
+          message: "请输入电话号码",
+          trigger: ["input"],
+        },
+        componentProps: {
+          placeholder: "请输入`333",
+        },
+      },
+      {
+        component: "input",
+        path: "anme2",
+        label: "姓名2",
+        rule: {
+          required: true,
+          message: "请输入电话号码",
+          trigger: ["input"],
+        },
+        componentProps: {
+          placeholder: "请输入`333222",
+        },
+      },
+      {
+        component: "select",
+        path: "sex",
+        label: "性别",
+        componentProps: {
+          placeholder: "请选择",
+          options: [
+            {
+              label: "男",
+              value: "1",
+            },
+            {
+              label: "女",
+              value: "2",
+            },
+          ],
+        },
+      },
+      {
+        component: "radio",
+        path: "sex1",
+        label: "性别22",
+        componentProps: {
+          placeholder: "请选择",
+          disabled: true,
+          options: [
+            {
+              label: "男",
+              value: "1",
+            },
+            {
+              label: "女",
+              value: "2",
+            },
+          ],
+        },
+      },
+    ];
     const [register, { refresh }] = useTable({
       api: fetcApi,
+      schemas: schemas,
       columns: [
         {
           title: "aa",
@@ -43,3 +110,10 @@ export default {
   },
 };
 </script>
+
+<style lang="less">
+.page-table {
+  background: #f3f3f3;
+  padding: 20px;
+}
+</style>
