@@ -147,11 +147,11 @@ export default {
     };
 
     function setProps(formProps) {
-      propsRef.value = deepMerge(unref(propsRef) || {}, formProps);
+      propsRef.value = deepMerge(unref(propsRef) || {}, unref(formProps));
     }
 
     const getSchema = computed(() => {
-      const schemas = unref(schemaRef) || unref(getProps).schemas;
+      const schemas = unref(schemaRef) || unref(unref(getProps).schemas);
       return schemas;
     });
 

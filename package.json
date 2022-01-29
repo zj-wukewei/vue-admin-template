@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "lodash-es": "^4.17.21",
     "naive-ui": "^2.19.2",
+    "query-string": "^7.1.0",
     "vfonts": "^0.1.0",
     "vue": "^3.0.0",
     "vue-request": "^1.2.0",

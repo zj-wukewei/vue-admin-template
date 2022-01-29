@@ -32,11 +32,6 @@ export default {
         component: "input",
         path: "anme1",
         label: "姓名1",
-        rule: {
-          required: true,
-          message: "请输入电话号码",
-          trigger: ["input"],
-        },
         componentProps: {
           placeholder: "请输入`333",
         },
@@ -45,11 +40,6 @@ export default {
         component: "input",
         path: "anme2",
         label: "姓名2",
-        rule: {
-          required: true,
-          message: "请输入电话号码",
-          trigger: ["input"],
-        },
         componentProps: {
           placeholder: "请输入`333222",
         },
@@ -95,6 +85,7 @@ export default {
     const [register, { refresh }] = useTable({
       api: fetcApi,
       schemas: schemas,
+      syncQuryUrl: true,
       columns: [
         {
           title: "aa",

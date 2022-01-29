@@ -1,12 +1,6 @@
 <template>
   <div v-if="hasTableForm" class="table-search">
-    <FormSchemas
-      :labelWidth="getMergeProps.labelWidth"
-      :table="true"
-      :schemas="getMergeProps.schemas"
-      :pathMapToTime="getMergeProps.pathMapToTime"
-      @ok="handleOkFormClick"
-    />
+    <FormSchemas @register="register" @ok="handleOkFormClick" />
   </div>
   <n-data-table
     remote
@@ -22,6 +16,8 @@
 import { ref, unref, computed } from "vue";
 import { usePagination } from "vue-request";
 import FormSchemas from "../form";
+import { useForm } from "../form/hooks/useForm";
+import useTableQuery from "./hooks/useTableQuery";
 
 export default {
   name: "BaiscTable",
@@ -42,6 +38,10 @@ export default {
     pathMapToTime: {
       type: Array,
       default: () => [],
+    },
+    syncQuryUrl: {
+      type: Boolean,
+      default: () => false,
     },
     pagination: {
       type: Object,
@@ -67,21 +67,21 @@ export default {
     });
 
     const hasTableForm = computed(() => {
-      console.log("unref(getMergeProps)", getMergeProps);
       const { schemas } = unref(getMergeProps);
-
       return schemas && schemas.length > 0;
     });
 
-    // const formProps = computed(() => {
-    //   const { schemas, propMapToTime } = unref(getMergeProps);
-    //   return {
-    //     table: true,
-    //     labelWidth: "100px",
-    //     schemas: schemas,
-    //     propMapToTime: propMapToTime,
-    //   };
-    // });
+    const formProps = computed(() => {
+      const { schemas, propMapToTime } = unref(getMergeProps);
+      return {
+        table: true,
+        labelWidth: "100px",
+        schemas: schemas,
+        propMapToTime: propMapToTime,
+      };
+    });
+
+    const [register, { setFieldsValue }] = useForm(formProps);
 
     const tableMethods = {
       setProps,
@@ -96,6 +96,7 @@ export default {
     const {
       data,
       current,
+      total,
       totalPage,
       loading,
       pageSize,
@@ -104,7 +105,9 @@ export default {
       refresh,
       run,
       params,
-    } = usePagination(unref(getMergeProps).api);
+    } = usePagination(unref(getMergeProps).api, {
+      manual: !!unref(getMergeProps).syncQuryUrl,
+    });
 
     function manualRun(param) {
       run({
@@ -121,16 +124,20 @@ export default {
       });
     }
 
+    if (unref(getMergeProps).syncQuryUrl) {
+      useTableQuery(params, run, setFieldsValue);
+    }
+
     function refreshData() {
       refresh();
     }
 
     const getMergePagination = computed(() => ({
       ...unref(getMergeProps).pagination,
-      itemCount: data.value?.total || 0,
-      pageCount: totalPage.value,
-      pageSize: pageSize.value,
-      page: current.value,
+      itemCount: total.value || 0,
+      pageCount: Number(totalPage.value),
+      pageSize: Number(pageSize.value),
+      page: Number(current.value),
       onChange: changeCurrent,
       onPageSizeChange: (ps) => {
         changePagination(1, ps);
@@ -153,6 +160,7 @@ export default {
       loading,
       hasTableForm,
       handleOkFormClick,
+      register,
     };
   },
 };
