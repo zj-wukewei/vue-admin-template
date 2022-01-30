@@ -28,12 +28,16 @@
         <n-form-item>
           <n-button type="primary" @click="handleOkClick">确定</n-button>
           <n-button @click="resetFields">取消</n-button>
-          <span class="action">
-            <n-icon size="20" @click="hanldeOnOverflow">
-              <ArrowDown v-if="overflow" />
-              <ArrowUp v-if="!overflow" />
-            </n-icon>
-          </span>
+          <n-button quaternary type="primary" @click="hanldeOnOverflow">
+            {{ overflow ? "展开" : "收起" }}
+
+            <template #icon>
+              <n-icon size="20">
+                <ArrowDown v-if="overflow" />
+                <ArrowUp v-if="!overflow" />
+              </n-icon>
+            </template>
+          </n-button>
         </n-form-item>
       </n-grid-item>
     </n-grid>
@@ -262,7 +266,7 @@ export default {
   }
 
   button + button {
-    margin-left: 20px;
+    margin-left: 15px;
   }
 }
 </style>
