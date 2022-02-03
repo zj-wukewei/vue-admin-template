@@ -1,5 +1,4 @@
 import { isObject } from "@/utils/is";
-import store from "@/store";
 
 export function deepMerge(src, target) {
   let key;
@@ -11,10 +10,7 @@ export function deepMerge(src, target) {
   return src;
 }
 
-export const hasPermission = (permissions, pathPermission, isAdmin) => {
-  if (isAdmin) {
-    return store.getters.isAdmin;
-  }
+export const hasPermission = (permissions, pathPermission) => {
   if (permissions.indexOf("*") != -1) return true;
   if (!permissions || pathPermission?.length == 0) return true;
   return permissions.some((perm) => pathPermission?.indexOf(perm) != -1);
