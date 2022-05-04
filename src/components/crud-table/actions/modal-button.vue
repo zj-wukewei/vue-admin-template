@@ -11,7 +11,7 @@
 <script>
 import { useModalsActionsContext } from "../hooks/useModalManager";
 export default {
-  name: "modal-button",
+  name: "ModalButton",
   props: {
     record: {
       type: Object,

@@ -31,9 +31,9 @@ import { useVModel } from "@/hooks";
 export default {
   name: "BasicModal",
   props: {
-    title: String,
-    loading: Boolean,
-    visible: Boolean,
+    title: { type: String, default: () => "标题" },
+    loading: { type: Boolean, default: () => false },
+    visible: { type: Boolean, default: () => false },
     width: { type: String, default: () => "600px" },
     showFooter: { type: Boolean, default: true },
     okText: { type: String, default: () => "确 定" },

@@ -4,6 +4,7 @@
       :is="modal.is"
       @register="modalsRegister[modal.modalId]"
       :componentProps="modal.componentProps"
+      :render="modal.render"
     />
   </template>
   <template v-for="action in actions" :key="action.modalId">
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import { h } from "vue";
 import { useModalManager } from "./hooks/useModalManager";
 export default {
   name: "crud-table",
@@ -26,6 +28,7 @@ export default {
       {
         modalId: "add",
         is: "basic-render-modal",
+        render: (value) => h("p", value?.aa),
       },
       {
         modalId: "add1",
@@ -38,13 +41,17 @@ export default {
         modalId: "add",
         is: "modal-button",
         text: "open",
-        record: "open",
+        record: {
+          aa: "open",
+        },
       },
       {
         modalId: "add1",
         is: "modal-button",
         text: "open1",
-        record: "open1",
+        record: {
+          aa: "open1",
+        },
       },
     ];
 

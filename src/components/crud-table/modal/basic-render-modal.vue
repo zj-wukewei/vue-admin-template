@@ -1,23 +1,9 @@
-<template>
-  <BasicModal
-    @register="modalRegister"
-    @ok="handleOk"
-    okText="提交"
-    :title="getTitle"
-    :loading="loading"
-    v-bind="componentProps"
-  >
-    asasasa{{ data1 }}
-  </BasicModal>
-</template>
-
 <script>
-import { ref } from "vue";
-import { BasicModal, useModalInner } from "@/components";
+import { ref, unref } from "vue";
+import { useModalInner, BasicModal } from "@/components";
 
 export default {
   name: "basic-render-modal",
-  components: { BasicModal },
   emits: ["ok", "register"],
   props: {
     modalId: {
@@ -28,18 +14,25 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    render: {
+      type: Function,
+      default: () => <div>默认占位</div>,
+    },
   },
-  setup() {
-    const data1 = ref();
-    const [modalRegister, { closeModal }] = useModalInner((data) => {
-      console.log("xxxxxxxx", data);
-      data1.value = data;
+  setup(props) {
+    const valueRef = ref();
+    const [modalRegister, methods] = useModalInner((data) => {
+      valueRef.value = data;
     });
 
-    return {
-      modalRegister,
-      data1,
-      closeModal,
+    return () => {
+      const value = unref(valueRef);
+      const slotContent = props.render(value, methods);
+      return (
+        <BasicModal onRegister={modalRegister} {...props.componentProps}>
+          {slotContent}
+        </BasicModal>
+      );
     };
   },
 };
